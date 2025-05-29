@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="router.url !== '/'">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Wowpe</a>
+
+    <!-- Toggler button controlled by Angular -->
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()" [attr.aria-expanded]="!isNavbarCollapsed"
+      aria-label="Toggle navigation">
+      <span [class]="isNavbarCollapsed ? 'navbar-toggler-icon' : 'navbar-toggler-icon open'"></span>
+    </button>
+
+    <!-- Collapsible menu controlled by Angular -->
+    <div class="collapse navbar-collapse justify-content-center" [class.show]="!isNavbarCollapsed" id="navbarContent">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a routerLink="payment" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link"
+            (click)="closeNavbar()">
+            Payment Form
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="history" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link"
+            (click)="closeNavbar()">
+            History
+          </a>
+        </li>
+      </ul>
+
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a routerLink="/" class="btn btn-outline-light btn-sm">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Main content -->
+<div class="container mt-3">
+  <router-outlet></router-outlet>
+</div>

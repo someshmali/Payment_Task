@@ -1,0 +1,45 @@
+.transaction-history {
+  max-width: 100%;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+}
+
+.filters input,
+.filters label {
+  width: 100%;
+}
+
+.filters label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table thead th,
+.table tbody td {
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  .transaction-history {
+    padding: 1rem;
+  }
+
+  .transaction-history h2 {
+    font-size: 1.4rem;
+  }
+
+  .table {
+    font-size: 0.85rem;
+  }
+
+  .table thead th,
+  .table tbody td {
+    white-space: nowrap;
+  }
+}

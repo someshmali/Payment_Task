@@ -1,0 +1,79 @@
+<div class="container-fluid transaction-history p-4 rounded shadow">
+  <h2 class="mb-4 text-primary text-center">Transaction History</h2>
+
+  <!-- Filters Section -->
+  <div class="filters row gy-3 align-items-end mb-4">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <input type="text" class="form-control" placeholder="Search Recipient UPI ID" [(ngModel)]="filterRecipient" />
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+      <label class="form-label fw-semibold small">From</label>
+      <input type="date" class="form-control" [(ngModel)]="filterStartDate" />
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+      <label class="form-label fw-semibold small">To</label>
+      <input type="date" class="form-control" [(ngModel)]="filterEndDate" />
+    </div>
+
+    <div class="col-lg-2 col-md-6 col-sm-12">
+      <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">✖ Clear</button>
+    </div>
+  </div>
+
+  <!-- Table Container for Horizontal Scroll on Small Screens -->
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered mb-0 text-nowrap">
+      <thead class="table-primary position-sticky top-0" style="z-index: 10;">
+        <tr>
+          <th (click)="changeSort('time')" style="cursor: pointer; min-width: 120px;">
+            Date
+            <span *ngIf="sortField === 'time'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+          </th>
+          <th (click)="changeSort('amount')" style="cursor: pointer; min-width: 100px;">
+            Amount (₹)
+            <span *ngIf="sortField === 'amount'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+          </th>
+          <th style="min-width: 180px;">Recipient UPI ID</th>
+          <th style="min-width: 150px;">Notes</th>
+          <th style="min-width: 100px;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let txn of paginatedTransactions">
+          <td>{{ txn.time | date: 'medium' }}</td>
+          <td><strong>₹{{ txn.amount }}</strong></td>
+          <td class="text-break">{{ txn.upi }}</td>
+          <td>{{ txn.notes || '-' }}</td>
+          <td>
+            <span class="badge" [ngClass]="{
+              'bg-success': txn.status === 'success',
+              'bg-danger': txn.status === 'failed',
+              'bg-secondary': !txn.status || txn.status === 'pending',
+              'text-white': true
+            }" style="font-weight: 600; padding: 0.35em 0.7em; font-size: 0.9em;">
+              {{ txn.status ? (txn.status | titlecase) : 'Pending' }}
+            </span>
+          </td>
+        </tr>
+        <tr *ngIf="paginatedTransactions.length === 0">
+          <td colspan="5" class="text-center text-muted py-3">No transactions found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-3 gap-2">
+    <div class="text-muted">Page {{ currentPage }} of {{ totalPages() }}</div>
+    <div>
+      <button class="btn btn-sm btn-outline-primary me-2" (click)="changePage(-1)" [disabled]="currentPage === 1">
+        ⟨ Prev
+      </button>
+      <button class="btn btn-sm btn-outline-primary" (click)="changePage(1)" [disabled]="currentPage === totalPages()">
+        Next ⟩
+      </button>
+    </div>
+  </div>
+</div>

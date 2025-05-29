@@ -1,0 +1,11 @@
+.card {
+  border-radius: 1rem;
+}
+
+input::placeholder {
+  font-style: italic;
+}
+.alert {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
